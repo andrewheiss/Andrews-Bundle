@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -wKU
+
+require 'jcode'
+
+# Split document into lines. Get current line number minus one for
+# previous, minus another for ruby being 0 based.
+lines = STDIN.readlines
+line  = ENV['TM_LINE_NUMBER'].to_i - 2
+
+# Get length of previous line, using jlength for unicode
+length = lines[line].rstrip.jlength
+
+# Print same number of -
+print "#"
+length.times { print "-" }
+print "-"
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>name</key>
+	<string>Perl comment line</string>
+	<key>output</key>
+	<string>afterSelectedText</string>
+	<key>scope</key>
+	<string>source.perl</string>
+	<key>tabTrigger</key>
+	<string>##</string>
+	<key>uuid</key>
+	<string>24931813-E2D0-41F2-9208-CF058490845E</string>
+</dict>
+</plist>
