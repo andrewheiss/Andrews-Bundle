@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string># Create a temporary file so that this works with unsaved documents
+TM_TMPFILE="$(mktemp /tmp/tm_mail_XXXXXX).html" || exit
+
+cd "${TM_MULTIMARKDOWN_PATH:-$HOME/Library/Application Support/MultiMarkdown}"
+cd bin
+./mmd2XHTML.pl &gt;&gt; "$TM_TMPFILE"
+
+# Create a title based on the filename, if there is one
+TM_TITLE=${TM_FILENAME:-untitled}
+
+osascript -e 'tell app "Safari" to make new document with properties { URL:"file://'"$TM_TMPFILE"'" }'
+osascript -e 'tell app "Safari"' -e 'email contents of first document' -e 'close first document' -e 'end tell'
+
+rm -f "$TM_TMPFILE" "${TM_TMPFILE%.html}"</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>@D</string>
+	<key>name</key>
+	<string>Mail</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>text.html.markdown</string>
+	<key>uuid</key>
+	<string>42770470-E870-4865-94E9-3B59584572AB</string>
+</dict>
+</plist>
