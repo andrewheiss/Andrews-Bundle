@@ -28,6 +28,8 @@
 			<string>findWithOptions:</string>
 		</dict>
 	</array>
+	<key>keyEquivalent</key>
+	<string>^~@C</string>
 	<key>name</key>
 	<string>Clean Skim notes</string>
 	<key>uuid</key>

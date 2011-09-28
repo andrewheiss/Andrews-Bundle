@@ -5,38 +5,42 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby -wKU
+	<string>#!/usr/bin/env ruby -KU
 
 pattern = /^\d* - /
 old_page = ""
-lines = STDIN.readlines
 
-# file = File.open("test.txt", "r")
-# while (line = file.gets)  
-while (line = lines)  
+# File.readlines("test.txt").each do |line|
+STDIN.readlines.each do |line|
   if line == "\n"
-    puts line
+    print line
   else
-    parsed = pattern.match(line)
-    current_page = parsed[0]
-    if current_page == old_page
-      line = line.sub(pattern, "")
-      puts line
+
+    if line =~ pattern
+      parsed = pattern.match(line)
+      current_page = parsed[0]
+
+      if current_page == old_page
+        line = line.sub(pattern, "")
+        print line
+      else
+        old_page = current_page
+        print line
+      end
     else
-      old_page = current_page
-      puts line
+      print line
     end
+
   end
-end
-# file.close</string>
+end</string>
 	<key>input</key>
-	<string>document</string>
+	<string>selection</string>
 	<key>keyEquivalent</key>
 	<string>^~@C</string>
 	<key>name</key>
 	<string>Clean page numbers</string>
 	<key>output</key>
-	<string>openAsNewDocument</string>
+	<string>replaceSelectedText</string>
 	<key>uuid</key>
 	<string>E5A13F5B-D712-4E72-ABC9-70EB934A90A8</string>
 </dict>
